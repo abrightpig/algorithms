@@ -28,12 +28,11 @@ tree_node_t *create(int key)
 }
 
 
-bool insert(tree_node_t *root, int key) 
+tree_node_t *insert(tree_node_t *root, int key) 
 {
-    printf("inserting: root=%d key=%d\n", root->key, key);
+    printf("inserting: key=%d\n", key);
     if (root == NULL) {
-        fprintf(stderr, "root is null\n");
-        return false;
+        return create(key);
     }
 
     tree_node_t *p = root;
@@ -47,20 +46,26 @@ bool insert(tree_node_t *root, int key)
            else break;
         }
         else {
-            return false;       // insert failed: key duplicate 
+            return root;       // insert failed: key duplicate 
         }
     }
 
     tree_node_t *tmp_node = (tree_node_t *)malloc(sizeof(tree_node_t));
     if (tmp_node == NULL) {
         fprintf(stderr, "alloc new node failed\n");
-        return false;
+        return NULL;
     }
     tmp_node->key = key;
     tmp_node->parent = p;
     if (key < p->key) p->l_child = tmp_node;
     else p->r_child = tmp_node;
-    return true;
+    return root;
+}
+
+
+tree_node_t *insert_r(tree_node_t *root, int )
+{
+
 }
 
 void travel(tree_node_t *p)
@@ -103,6 +108,13 @@ int main() {
     /* insert */
     tree_node_t *root = NULL;
     for (int i = 0; i < len; ++i) {
+        tree_node_t *result = insert(root, a[i]);
+        if (result == NULL) {
+            fprintf(stderr, "create tree failed\n");
+            return -1;
+        }
+        root = result;
+        /*
         if (root == NULL) {
             root = create(a[i]);
             if (root == NULL) {
@@ -116,6 +128,7 @@ int main() {
                 return -1;
             }
         }
+        */
     }
 
     /* travel */
