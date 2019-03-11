@@ -28,9 +28,9 @@ tree_node_t *create(int key)
 }
 
 
-//bool insert(const tree_node_t *root, int key) 
 bool insert(tree_node_t *root, int key) 
 {
+    printf("inserting: root=%d key=%d\n", root->key, key);
     if (root == NULL) {
         fprintf(stderr, "root is null\n");
         return false;
@@ -58,7 +58,7 @@ bool insert(tree_node_t *root, int key)
     }
     tmp_node->key = key;
     tmp_node->parent = p;
-    if (p->l_child == NULL) p->l_child = tmp_node;
+    if (key < p->key) p->l_child = tmp_node;
     else p->r_child = tmp_node;
     return true;
 }
@@ -119,7 +119,7 @@ int main() {
     }
 
     /* travel */
-    printf("bs_tree is: ");
+    printf("bs_tree is: \n");
     travel(root);
     printf("\n ");
 
