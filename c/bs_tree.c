@@ -95,7 +95,7 @@ int main() {
     int len = 10;
     time_t t;
 
-    /* Intializes random number generator */
+    /* generate random source data */
     srand((unsigned) time(&t));
     printf("source:\n");
     for (int i = 0; i < len; ++i) {
@@ -114,21 +114,6 @@ int main() {
             return -1;
         }
         root = result;
-        /*
-        if (root == NULL) {
-            root = create(a[i]);
-            if (root == NULL) {
-                fprintf(stderr, "create tree failed\n");
-                return -1;
-            }
-        }
-        else {
-            if (!insert(root, a[i])) {
-                fprintf(stderr, "insert %d failed \n", a[i]);
-                return -1;
-            }
-        }
-        */
     }
 
     /* travel */
