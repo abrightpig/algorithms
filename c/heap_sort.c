@@ -18,11 +18,13 @@ void max_heap(int *arr, int len)
     if (arr == NULL || len <= 1) {
         return;
     }
+    /*
     printf("heap-source: ");
     for (int32_t i = 0; i < len; ++i) {
         printf("%d ", arr[i]);
     }
     printf("\n");
+    */
 
     for (int i = len / 2 - 1; i >= 0; --i) {
         if (i * 2 + 1 == len - 1 || arr[i * 2 + 1] >= arr[i * 2 + 2]) {
@@ -35,14 +37,31 @@ void max_heap(int *arr, int len)
         }
     }
 
+    /*
     printf("max_heap: ");
     for (int32_t i = 0; i < len; ++i) {
         printf("%d ", arr[i]);
     }
     printf("\n");
+    */
 }
 
-void adjust_heap(int *arr, int head, int end)
+void adjust_heap(int* arr, int begin, int len) {
+    for (int i = begin; 2 * i + 1 < len; ) {
+        int left = 2 * i + 1;
+        int right = left + 1;
+        int larger = left;
+        if (right < len && arr[right] > arr[left]) larger = right;
+        if (arr[larger] > arr[i]) {
+            swap(arr + i, arr + larger);
+            i = larger;
+        }
+        else break;
+    }
+
+}
+
+void adjust_heap2(int *arr, int head, int end)
 {
     if (arr == NULL || head < 0 || end < 1) {
         return;
@@ -78,13 +97,13 @@ void heap_sort(int *arr, int len)
     
     /* build max heap*/
     for (int i = len / 2 - 1; i >= 0; --i) {
-        adjust_heap(arr, i, len - 1);
+        adjust_heap(arr, i, len);
     }
 
     /* sort */
     for (int i = len - 1; i > 0; --i) {
         swap(arr, arr + i);
-        adjust_heap(arr, 0, i - 1);
+        adjust_heap(arr, 0, i);
     }
 }
 
@@ -100,11 +119,13 @@ void heap_sort2(int *arr, int len)
         //printf("max is %d\n", arr[0]);
         swap(arr, arr + i);
 
+        /*
     printf("sorted-tmp: ");
     for (int32_t j = 0; j < len; ++j) {
         printf("%d ", arr[j]);
     }
     printf("\n");
+        */
     }
 }
 
@@ -129,7 +150,8 @@ int main(void)
         }
         printf("\n");
 
-        heap_sort(a, j);
+        //heap_sort(a, j);
+        heap_sort2(a, j);
 
         printf("heap-sorted:\n");
         for (int32_t i = 0; i < j; ++i) {
